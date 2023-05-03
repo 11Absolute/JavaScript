@@ -42,23 +42,6 @@ console.log(`randomNumber(-11, 11) -> ${randomInteger(-11, 11)}`);
 
 
 console.log(`\nЗадача №5 Значения из массива`)
-// let array=[];
-// function sampleArray(massiv, count){
-//     while (count > 0) {
-//         array.push(randomInteger(0, array.length));
-//         count--;
-//     }
-//     console.log(`array: ${array}`);
-//     return(array);
-// }
-
-// console.log(`sampleArray([1,2,3,4], 2) -> [${sampleArray([1,1,1],2)}]`);
-// // for(var i = 0; i < 2; i++){
-// //     var a = Math.round(Math.random() * (0 + array.length-1));
-// //     console.log(a);
-// //     console.log(array[a]);
-// // }
-
 const Array = [1, 2, 3, 4, 5, 6, 7];
 function getRandom(n, Array) {
     const indexes = new Set();
