@@ -35,19 +35,38 @@ console.log(`Студент ${student.first_name} ${student.last_name} учит�
 
 console.log(`\nЗадача №4 Случайные числа`)
 function randomInteger(min, max) {
-    let rand = min + Math.random() * (max - min);
+    let rand = Math.random() * (max - min) + min;
     return Math.round(rand);
 }
 console.log(`randomNumber(-11, 11) -> ${randomInteger(-11, 11)}`);
 
 
 console.log(`\nЗадача №5 Значения из массива`)
-let array=[];
-function sampleArray(massiv, count){
-    while (count > 0) {
-        array.push(randomInteger(0, massiv.length));
-        count--;
+// let array=[];
+// function sampleArray(massiv, count){
+//     while (count > 0) {
+//         array.push(randomInteger(0, array.length));
+//         count--;
+//     }
+//     console.log(`array: ${array}`);
+//     return(array);
+// }
+
+// console.log(`sampleArray([1,2,3,4], 2) -> [${sampleArray([1,1,1],2)}]`);
+// // for(var i = 0; i < 2; i++){
+// //     var a = Math.round(Math.random() * (0 + array.length-1));
+// //     console.log(a);
+// //     console.log(array[a]);
+// // }
+
+const Array = [1, 2, 3, 4, 5, 6, 7];
+function getRandom(n, Array) {
+    const indexes = new Set();
+    while (indexes.size < n) {
+        const index = Math.floor(Array.length * Math.random());
+        indexes.add(index);
     }
-    return(array);
+    const result = [...indexes].map(index => Array[index]);
+    return result;
 }
-console.log(`sampleArray([1,2,3,4], 2) -> [${sampleArray([1,2,3,4],2)}]`);
+console.log(getRandom(2, Array));
