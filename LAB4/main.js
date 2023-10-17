@@ -65,12 +65,12 @@ scene.add(spotLight);
 
   let cube = buildCube(30, 15, -10, 20, 20, 20);
   cube.castShadow = true;
-   scene.add(cube);
-   buildPlane(0, 0, 0, 150, 100, -Math.PI/2, 0, 0);
+  scene.add(cube);
+  buildPlane(0, 0, 0, 150, 100, -Math.PI/2, 0, 0);
    //buildPlane(0, 30, -50, 150, 60, 0, 0, 0);
-   BufferGeometryPlane(150, 60, 0, 30, -50);
-   BufferGeometryTriangularPyramid(10, -35, 15, -10);
-   animate();
+  BufferGeometryPlane(150, 60, 0, 30, -50);
+  BufferGeometryTriangularPyramid(10, -35, 15, -10);
+  animate();
 
 let result = document.querySelector('#result');
 document.body.addEventListener('change', function (e) {
@@ -105,7 +105,7 @@ const vertices = new Float32Array( [
 // itemSize = 3 because there are 3 values (components) per vertex
 geometry.setAttribute( 'position', new THREE.BufferAttribute( vertices, 3 ) );
 geometry.computeVertexNormals();
-const material = new THREE.MeshLambertMaterial({ color: 0xffffff    });
+const material = new THREE.MeshLambertMaterial({ color: 0x0000ff    });
 const mesh = new THREE.Mesh( geometry, material );
 
 mesh.receiveShadow = true;
@@ -146,6 +146,7 @@ function BufferGeometryTriangularPyramid(side, x, y, z) {
   scene.add(pyramid);
 
 }
+
 
 function changeLight() {
   for (var i = 0; i<radioButtonsLight.length; i++) {
@@ -198,10 +199,10 @@ function buildCube(x, y, z, width, height, depth) {
 
 function buildPlane(x, y, z, width, height, angleX, angleY, angleZ) {
   var geo = new THREE.PlaneBufferGeometry(width, height, 8, 8);
-  var mat = new THREE.MeshLambertMaterial({ color: 0xffffff});
+  var mat = new THREE.MeshLambertMaterial({ color: 0x0000ff});
   var plane1 = new THREE.Mesh(geo, mat);
   const edges = new THREE.EdgesGeometry( geo );
-  const line = new THREE.LineSegments( edges, new THREE.LineBasicMaterial( { color: 0xffffff } ) );
+  const line = new THREE.LineSegments( edges, new THREE.LineBasicMaterial( { color: 0x0000ff } ) );
 
   plane1.rotation.set(angleX,angleY,angleZ);
   plane1.position.set(x,y,z);
