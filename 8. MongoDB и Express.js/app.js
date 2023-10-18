@@ -1,22 +1,23 @@
 const express = require('express');
-const morgan = require("morgan");
-const dbAPI = require("./controllers/controller");
-const v1_router = require("./router");
+const path = require('path');
+const helmet = require('helmet');
+const routerDB = require("./router/mongodb.js")
 
-const HOST = '127.0.0.1';
-const PORT = 3000;
+const app = express()
 
-const app = express();
-app.use(express.static('public'));
+app.use(express.json())
 
-app.use(morgan('dev'));
-app.use('/db', dbAPI);
-app.use('/v1', v1_router);
+const hostname = '127.0.0.1'
+const port = 3000
 
-app.listen(PORT, HOST, () => {
-    console.log(`Сервер запущен http://${HOST}:${PORT}`);
-});
+app.listen(port, hostname, () => {
+  console.log(`Server running at http://${hostname}:${port}/\nStart: ${new Date()}`)
+})
+
+app.use(express.static(path.resolve(__dirname, 'public')));
+
+app.use('/v2', routerDB)
 
 app.use((req, res, next) => {
-    res.status(400).send('Такой страницы не существует!');
+  res.status(400).send('Такой страницы не существует!');
 });
