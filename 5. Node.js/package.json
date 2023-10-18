@@ -2,13 +2,13 @@
   "name": "node-js",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "serve": "nodemon app.js",
-    "start": "node app.js"
+    "serve": "nodemon index.js",
+    "start": "node index.js"
   },
-  "author": "Daria",
+  "author": "Arapov",
   "license": "ISC",
   
   "devDependencies": {
