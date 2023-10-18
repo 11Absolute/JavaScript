@@ -1,34 +1,40 @@
 const express = require('express');
-const v1_router = express.Router();
-const v1_router2 = express.Router();
+const router = express.Router();
 const jsonParser = express.json();
 
-
-let user = { user_agent: 0 };
+const requests = {}
 let com = " ";
 
-v1_router.get('/', (req, res) => {
+router.use((req, res, next) => {
+    if (requests[req.headers['user-agent']] == undefined) requests[req.headers['user-agent']] = 1
+    else requests[req.headers['user-agent']] += 1
+    // console.log(`${req.headers['user-agent']}\tcount: ${requests[req.headers['user-agent']]}\t${req.method}\t${req.url}\n`)
+    next()
+})
+
+router.get('/', (req, res) => {
 	res.send('Рады видеть вас на нашем сервере!');
 });
 
-v1_router.get('/stats', (req, res) => {
-	user.user_agent++;
-	res.send(`<table>
-	<tr><td>User-agent:</td>
-	<td>Request:</td></tr>
-	<tr><td>${req.headers['user-agent']}</td><td>${user.user_agent}</td></tr>
-	</table>`)
+router.get('/stats', (req, res) => {
+	res.setHeader('Content-Type', 'text/html')
+	let text = '<table>'
+	text += '<tr><th style="border: 1px solid black">User Agent</th><th style="border: 1px solid black">Requests</th></tr>'
+	for (let key in requests) {
+		text += `<tr><td style="border: 1px solid black">${key}</td><td style="border: 1px solid black">${requests[key]}</td></tr>`
+	}
+	text += '</table>'
+	res.end(text)   
 });
 
-
-v1_router2.get('/', (req, res) => {
+router.get('/comments', (req, res) => {
 	res.send(com);
 });
 
-v1_router2.post('/', jsonParser, (req, res) => {
+router.post('/comments', jsonParser, (req, res) => {
 	console.log(req.body);
 	com += JSON.stringify(req.body);
 	res.send('Спасибо, за вашу отзывчивость!');
 });
 
-module.exports = { v1_router, v1_router2 };
+module.exports = {router};

@@ -1,5 +1,5 @@
 const express = require("express");
-const v1_router = require("./router");
+const router = require("./router");
 const morgan = require("morgan");
 const helmet = require("helmet");
 
@@ -11,7 +11,7 @@ app.use(morgan('dev'));
 app.use(helmet());
 app.use(express.static("public"));
 
-app.use("/v1", v1_router);
+app.use("/v1", router);
 
 app.use(function (err, req, res, next) {
     if (err.statusCode) {

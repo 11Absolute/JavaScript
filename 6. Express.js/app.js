@@ -1,13 +1,12 @@
 const express = require('express');
-const { v1_router, v1_router2 } = require("./router");
+const {router} = require("./router");
 const HOST = '127.0.0.1';
 const PORT = 3000;
 
 const app = express();
 app.use(express.static('public'));
 
-app.use('/v1', v1_router);
-app.use('/v1/comments', v1_router2);
+app.use('/v1', router);
 
 app.listen(PORT, HOST, () => {
 	console.log(`Сервер запущен http://${HOST}:${PORT}`);

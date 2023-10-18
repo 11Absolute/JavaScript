@@ -8,7 +8,7 @@
     "serve": "nodemon app.js",
     "start": "node app.js"
   },
-  "author": "Daria",
+  "author": "Arapov",
   "license": "ISC",
   "devDependencies": {
     "nodemon": "^2.0.22"
