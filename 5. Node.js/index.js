@@ -7,9 +7,6 @@ const comments = ['1', '2', '3']
 const requests = {}
 
 const server = http.createServer((req, res) => {
-    // if (req.url === '/favicon.ico') {
-    //     return;
-    // }
 
     if (requests[req.headers['user-agent']] == undefined) requests[req.headers['user-agent']] = 1
     else requests[req.headers['user-agent']] += 1
