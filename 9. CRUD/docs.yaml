@@ -1,0 +1,368 @@
+openapi: 3.0.3
+info:
+  title: API
+  version: 3.0.0
+servers:
+  - url: http://127.0.0.1:3000
+paths:
+  /:
+    get:
+      tags:
+        - main
+      summary: главная страница
+      description: возвращает Data Base
+      responses:
+        '200':
+          description: успешно
+          
+  /users:
+    post:
+      tags:
+        - users
+      summary: добавление пользователя
+      description: добавление имя пользователя
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Chingiz
+      responses:
+        '200':
+          description: успешный запрос
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/addUser"
+        '500':
+          description: ошибка
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/500"
+                
+  /user/{id}:
+    delete:
+      tags:
+        - users
+      summary: удаление пользователя
+      description: удаление пользователя по id
+      parameters:
+        - name: id
+          in: path
+          description: id пользователя которого удалим
+          required: true
+          schema: 
+            type: string
+      responses:
+        '200':
+          description: успешный запрос
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/delete"
+        '404':
+          description: ошибка
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/404"
+        '500':
+          description: ошибка
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/500"
+          
+  /models:
+    get:
+      tags:
+        - models
+      summary: получить все модели
+      responses:
+        '200':
+          description: успешный запрос
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models"
+        '500':
+          description: ошибка
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/500"
+    post:
+      tags:
+        - models
+      summary: добавить модель
+      parameters:
+        - name: apiKey
+          in: query
+          description: apiKey
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/modelAdd"
+      responses:
+        '200':
+          description: успешный запрос
+          content:
+            text/csv:
+              schema:
+                type: string
+                example: "Спасибо, за вашу отзывчивость!"
+        '401':
+          description: ошибка
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/401"
+        '500':
+          description: ошибка
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/500"
+  /models/{id}:
+    get:
+      tags:
+        - models
+      summary: получение по id
+      parameters:
+        - name: id
+          in: path
+          description: id модели которую получим
+          required: true
+          schema: 
+            type: string
+      responses:
+        '200':
+          description: успешный запрос
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/model"
+        '404':
+          description: ошибка
+          content:
+            text/csv:
+              schema:
+                type: string
+                example: "Not Found"
+        '500':
+          description: ошибка
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/500"
+    put:
+      tags:
+        - models
+      summary: обновление модели
+      description: обновление модели по id
+      parameters:
+        - name: id
+          in: path
+          description: id модели, которую хотим изменить
+          required: true
+          schema: 
+            type: string
+        - name: apiKey
+          in: query
+          description: apiKey
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: успешный запрос
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/update"
+        '401':
+          description: ошибка
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/401"
+        '404':
+          description: ошибка
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/404"
+        '500':
+          description: ошибка
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/500"
+    delete:
+      tags:
+        - models
+      summary: удаление модели
+      description: удаление модели по id
+      parameters:
+        - name: id
+          in: path
+          description: id модели которую удалим
+          required: true
+          schema: 
+            type: string
+        - name: apiKey
+          in: query
+          description: логин пользователя
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: успешный запрос
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/delete"
+        '401':
+          description: ошибка
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/401"
+        '404':
+          description: ошибка
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/404"
+        '500':
+          description: ошибка
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/500"
+  
+components:
+  schemas:
+    modelAdd:
+      type: object
+      properties:
+        nameUser:
+          $ref: "#/components/schemas/model/properties/nameUser"
+        nameModel:
+          $ref: "#/components/schemas/model/properties/nameModel"
+        typeModel:
+          $ref: "#/components/schemas/model/properties/typeModel"
+        JSONfile:
+          $ref: "#/components/schemas/model/properties/JSONfile"
+        description:
+          $ref: "#/components/schemas/model/properties/description"
+        comments:
+          $ref: "#/components/schemas/model/properties/comments"
+    model:
+      type: object
+      properties:
+        _id: 
+          type: string
+          example: 653185318b83e67dbf34b6ff
+        nameUser:
+          type: string
+          example: Chingyz
+        nameModel:
+          type: string
+          example: Cube
+        typeModel:
+          type: string
+          example: Cube
+        JSONfile:
+          type: string
+          example: 
+        description:
+          type: string
+          example: Smth
+        comments:
+          type: string
+          example: comments
+        data:
+          type: string
+          example: Thu October 19 2023 23:00:00 GMT+0300 (Москва, стандартное время)
+    models:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: 653185318b83e67dbf34b6ff
+        nameModel:
+          type: string
+          example: Chingiz
+    update:
+      type: object
+      properties:
+        acknowledged: 
+          type: boolean
+          example: true
+        modifiedCount: 
+          type: integer
+          example: 1
+        upsertedId: 
+          type: string
+          example: null,
+        upsertedCount: 
+          type: integer
+          example: 0,
+        matchedCount:
+          type: integer
+          example: 1
+    delete:
+      type: object
+      properties:
+        status:
+          type: integer
+          example: 200
+        message:
+          type: string
+          example: id 653185318b83e67dbf34b6ff deleted
+    addUser:
+      type: object
+      properties:
+        acknowledged:
+          type: boolean
+          example: true
+        insertedId: 
+          type: string
+          example: 653185318b83e67dbf34b6ff
+    500:
+      type: object
+      properties:
+        status:
+          type: integer
+          example: 500
+        message:
+          type: string
+          example: описание ошибки
+    401:
+      type: object
+      properties:
+        status:
+          type: integer   
+          example: 401
+        message:
+          type: string
+          example: Нужно авторизоваться!
+    404:
+      type: object
+      properties:
+        status:
+          type: integer
+          example: 404
+        message:
+          type: string
+          example: id 644ea27a1ddd7438385b31be not found
